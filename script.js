@@ -5,7 +5,8 @@ let root=document.getElementById("root");
 let form=document.getElementById("form");
 form.addEventListener("submit",search);
 
-
+const history=document.getElementById("history");
+console.log(history.innerHTML);
 function search(e){
     e.preventDefault();
     console.log(e.target.years.value);
@@ -19,8 +20,7 @@ function search(e){
 
 
 
-
-
+let i=0;
 async function abc(){
 let url=`https://api.nasa.gov/planetary/apod?date=${date}&api_key=${key}`
 
@@ -33,6 +33,10 @@ let url=`https://api.nasa.gov/planetary/apod?date=${date}&api_key=${key}`
  <img src="${data2.hdurl}" height="200px" width="300px"/> 
  <p>${data2.explanation}</p>
  </div>`
+localStorage.setItem(`${i}`,date);
+i++;
+console.log(localStorage);
+
 // console.log("ab")
 }
    else{
@@ -43,4 +47,25 @@ let url=`https://api.nasa.gov/planetary/apod?date=${date}&api_key=${key}`
         alert("there might be some backend issue");
     }
 }
+let prev =document.getElementById("prev");
+prev.addEventListener("click",()=>{
+    let arr=[]
+    for(let i=0;i<localStorage.length;i++)
+    {
+        console.log("abc");
+         arr.push(localStorage.key(i));
+    }
+    console.log("arr",arr)
+    history.innerHTML=''
+    for(let i=0;i<arr.length;i++)
+    {
+        let newele=document.createElement("div");
+        newele.innerText=`${localStorage.getItem(arr[i])}`
+        console.log("a",localStorage.getItem(arr[i]))
+        history.appendChild(newele);
+    }
+    
+})
 abc();
+document.getElementById("prev");
+// localStorage.clear();
